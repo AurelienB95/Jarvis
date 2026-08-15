@@ -1,0 +1,9 @@
+# Spécifique à chaque environnement clasp (contient le scriptId local)
+.clasp.json
+
+# Identifiants clasp (ne doit jamais être committé)
+.clasprc.json
+
+node_modules/
+*.log
+.DS_Store
