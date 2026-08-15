@@ -18,14 +18,15 @@ function resolveIntent_(text) {
  * de complexité est reporté après la v1, faute de données réelles pour le calibrer).
  */
 function pickModel_(text) {
-  const trimmed = text.trim();
-  const lower = trimmed.toLowerCase();
-  for (let i = 0; i < CONFIG.CLAUDE_KEYWORD_PREFIXES.length; i++) {
-    const prefix = CONFIG.CLAUDE_KEYWORD_PREFIXES[i];
-    if (lower.indexOf(prefix) === 0) {
-      return { targetModel: 'claude', cleanedText: trimmed.slice(prefix.length).trim() };
-    }
-  }
+  /* à décommenter pour utiliser Claude
+  *const trimmed = text.trim();
+  *const lower = trimmed.toLowerCase();
+  *for (let i = 0; i < CONFIG.CLAUDE_KEYWORD_PREFIXES.length; i++) {
+  *  const prefix = CONFIG.CLAUDE_KEYWORD_PREFIXES[i];
+  *  if (lower.indexOf(prefix) === 0) {
+  *    return { targetModel: 'claude', cleanedText: trimmed.slice(prefix.length).trim() };
+  *  }
+  }*/ 
   return { targetModel: 'gemini', cleanedText: trimmed };
 }
 
