@@ -27,6 +27,12 @@ function doPost(e) {
     return jsonResponse_({ status: 'error', result_message: 'JSON invalide reçu par le webhook.' });
   }
 
+  if (!isTokenValid_(payload.token)) {
+    // Le déploiement est en accès "Tout le monde" (Tasker ne sait pas faire d'OAuth),
+    // ce contrôle de token est donc la seule barrière contre un appel non autorisé.
+    return jsonResponse_({ status: 'error', result_message: 'Non autorisé.' });
+  }
+
   try {
     if (payload.step === 'request') {
       return jsonResponse_(handleRequestStep_(payload));
@@ -50,4 +56,9 @@ function doGet(e) {
 
 function jsonResponse_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+function isTokenValid_(receivedToken) {
+  const expected = getScriptProperty_('JARVIS_TOKEN');
+  return receivedToken === expected;
 }
